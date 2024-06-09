@@ -25,7 +25,7 @@ This project is a Flask web application that uses a webcam to detect gaze using 
 
 1. **Clone the Repository**
     ```sh
-    git clone <your-github-repo-url>
+    git clone https://github.com/Ritik-1101/Gaze-Detection
     cd flask_gaze_app
     ```
 
@@ -48,4 +48,4 @@ Download the shape predictor file from the following link and place it in the pr
 ### Configuration
 Ensure the path to the shape predictor file is correct in `app/routes.py`:
 ```python
-predictor_path = 'D:/Visual Studio Code Files/AIDI Sem-2/AIDI-2004 - AI IN ENTERPRISE SYSTEMS/Bouns Lab/shape_predictor_68_face_landmarks.dat'
+predictor_path = '/shape_predictor_68_face_landmarks.dat'
