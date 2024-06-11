@@ -19,18 +19,21 @@
         navigator.mediaDevices.getUserMedia({ video: true })
             .then(stream => {
                 video.srcObject = stream;
+                console.log("Camera access granted.");
             })
             .catch(err => {
                 console.error("Error accessing camera: ", err);
             });
 
         startButton.addEventListener('click', () => {
+            console.log("Start Detection clicked.");
             setInterval(() => {
                 captureImage();
-            }, 100); // Capture an image every 100ms
+            }, 1000); // Capture an image every second for easier debugging
         });
 
         function captureImage() {
+            console.log("Capturing image.");
             const canvas = document.createElement('canvas');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
@@ -38,6 +41,7 @@
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
             const imageData = canvas.toDataURL('image/jpeg');
 
+            console.log("Sending image to server.");
             fetch('/process_image', {
                 method: 'POST',
                 headers: {
@@ -45,7 +49,10 @@
                 },
                 body: JSON.stringify({ image: imageData })
             })
-            .then(response => response.json())
+            .then(response => {
+                console.log('Received response from server.');
+                return response.json();
+            })
             .then(data => {
                 console.log('Gaze Detection Result:', data);
             })
