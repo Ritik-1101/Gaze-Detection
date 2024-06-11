@@ -17,6 +17,7 @@
 
         // Request access to the user's camera
         function startCamera() {
+            console.log("Requesting camera access...");
             navigator.mediaDevices.getUserMedia({ video: true })
                 .then(stream => {
                     video.srcObject = stream;
