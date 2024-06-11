@@ -16,17 +16,20 @@
         const startButton = document.getElementById('start-button');
 
         // Request access to the user's camera
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(stream => {
-                video.srcObject = stream;
-                console.log("Camera access granted.");
-            })
-            .catch(err => {
-                console.error("Error accessing camera: ", err);
-            });
+        function startCamera() {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    video.srcObject = stream;
+                    console.log("Camera access granted.");
+                })
+                .catch(err => {
+                    console.error("Error accessing camera: ", err);
+                });
+        }
 
         startButton.addEventListener('click', () => {
             console.log("Start Detection clicked.");
+            startCamera();
             setInterval(() => {
                 captureImage();
             }, 1000); // Capture an image every second for easier debugging
