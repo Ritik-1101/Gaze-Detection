@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, Response
+from flask import Flask, render_template, request, jsonify
 import cv2
 import dlib
 import numpy as np
@@ -75,10 +75,6 @@ def process_image():
     except Exception as e:
         print(f"Error processing image: {e}")
         return jsonify({"error": str(e)})
-
-@app.route('/video_feed')
-def video_feed():
-    return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8000)
