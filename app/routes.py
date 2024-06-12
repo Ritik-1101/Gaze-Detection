@@ -5,13 +5,8 @@ import numpy as np
 
 main = Blueprint('main', __name__)
 
-# Path to shape predictor file
-predictor_path = 'shape_predictor_68_face_landmarks.dat'
-
-# Load the pre-trained face detector
+predictor_path = 'D:/Visual Studio Code Files/AIDI Sem-2/AIDI-2004 - AI IN ENTERPRISE SYSTEMS/Bouns Lab/shape_predictor_68_face_landmarks.dat'
 detector = dlib.get_frontal_face_detector()
-
-# Load the shape predictor
 predictor = dlib.shape_predictor(predictor_path)
 
 def detect_gaze(landmarks, frame, gray):

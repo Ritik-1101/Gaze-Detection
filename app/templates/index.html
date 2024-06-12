@@ -8,67 +8,7 @@
 <body>
     <h1>Gaze Detection</h1>
     <div>
-        <video id="video" width="640" height="480" autoplay></video>
-        <button id="start-button">Start Detection</button>
+        <img src="{{ url_for('main.video_feed') }}" width="640" height="480">
     </div>
-    <script>
-        const video = document.getElementById('video');
-        const startButton = document.getElementById('start-button');
-
-        // Request access to the user's camera
-        function startCamera() {
-            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                console.log("Requesting camera access...");
-                navigator.mediaDevices.getUserMedia({ video: true })
-                    .then(stream => {
-                        video.srcObject = stream;
-                        console.log("Camera access granted.");
-                    })
-                    .catch(err => {
-                        console.error("Error accessing camera: ", err);
-                    });
-            } else {
-                console.error("MediaDevices API not supported in this browser.");
-                alert("Your browser does not support the MediaDevices API. Please try a different browser.");
-            }
-        }
-
-        startButton.addEventListener('click', () => {
-            console.log("Start Detection clicked.");
-            startCamera();
-            setInterval(() => {
-                captureImage();
-            }, 1000); // Capture an image every second for easier debugging
-        });
-
-        function captureImage() {
-            console.log("Capturing image.");
-            const canvas = document.createElement('canvas');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            const context = canvas.getContext('2d');
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            const imageData = canvas.toDataURL('image/jpeg');
-
-            console.log("Sending image to server.");
-            fetch('/process_image', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ image: imageData })
-            })
-            .then(response => {
-                console.log('Received response from server.');
-                return response.json();
-            })
-            .then(data => {
-                console.log('Gaze Detection Result:', data);
-            })
-            .catch(error => {
-                console.error('Error processing image:', error);
-            });
-        }
-    </script>
 </body>
 </html>
